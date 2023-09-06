@@ -4,7 +4,7 @@
             *Lacks features like; Settings
             *Handles files; ".dae", ".dds" and ".png". 
             *Sets the "name", "mapTo" and "colorMap" 
-            *Is only usefull for batch processing material slots.             
+            *Is only useful for batch processing material slots.             
             
         Usage:
         1. Format your texture or material names. They should match or atleast be simular.
