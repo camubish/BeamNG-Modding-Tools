@@ -19,7 +19,7 @@ Usage:
    - The folder containing your textures .../shapes/materials/wood/wood.color.dds
    - The folder containing your main.materials.json .../shapes
    - The script will find any Colladas within the root and subfolders.
-   - Your directory must contain a "levels" subpath, at least one Collada, and one texture for the process to attempt matching.
+   - Your directory must contain the selected keyword, at least one Collada, and one texture for the process to attempt matching.
 
 3. Choose your content type by setting the keyword using the radio buttons.
 
