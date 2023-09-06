@@ -44,7 +44,7 @@ if __name__ == "__main__":
            The script will find any colladas within the root and subfolders
              *Your directory must contain; levels subpath, at least 1 collada and 1 texture for the process to attempt matching.
              
-        3. Choose you content type to set the keyword using the radio buttons.
+        3. Choose your content type. Set the keyword using the radio buttons.
              
         4. Enter the root directory.
             *Warning, this script will overwrite any existing main.material.json in the directory. Make backups before proceeding. 
