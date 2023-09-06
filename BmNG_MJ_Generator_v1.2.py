@@ -15,14 +15,17 @@ def restart_script():
     python = sys.executable
     os.execl(python, python, *sys.argv)
 
+    
 if __name__ == "__main__":
-
+    
+    Version = 1.2
     def open_about_window():
         about_text = '''
+        Version = {Version}
         This is a tool that generates main.materials.json files for BeamNG.drive.
         This version;
             *Lacks features like; Settings
-            *Only handles level content, files; ".dae" and ".dds". 
+            *Handles files; ".dae", ".dds" and ".png". 
             *Sets the "name", "mapTo" and "colorMap" 
             *Is only usefull for batch processing material slots.             
             
@@ -41,12 +44,14 @@ if __name__ == "__main__":
            The script will find any colladas within the root and subfolders
              *Your directory must contain; levels subpath, at least 1 collada and 1 texture for the process to attempt matching.
              
-        3. Enter the root directory.
+        3. Choose you content type to set the keyword using the radio buttons.
+             
+        4. Enter the root directory.
             *Warning, this script will overwrite any existing main.material.json in the directory. Make backups before proceeding. 
             
-        4. Click the "Process" button to generate the JSON file.
+        5. Click the "Process" button to generate the JSON file.
         
-        5. Done. You can now analyse your results. 
+        6. Done. You can now analyse your results. 
            *If any materials are with no matches. A list will be available in a window.  
 
         Author: Camubish
@@ -61,6 +66,11 @@ if __name__ == "__main__":
 
         close_button = tk.Button(about_window, text="Close", command=about_window.destroy)
         close_button.pack()
+    
+    def update_keyword():
+        global Keyword
+        Keyword = keyword_var.get()
+        print(f"Selected Keyword: {Keyword}")
 
 
     def check_output_file_exists(event=None):
@@ -103,7 +113,6 @@ if __name__ == "__main__":
     root_directory = ""
     #
     output_file = "main.materials.json"
-    Keyword = "levels"
     #
     collada = None  # Define the collada object at a higher scope
     progress_bar = None  # Add this line
@@ -247,6 +256,7 @@ if __name__ == "__main__":
             
             end_time = time.time()
             elapsed_time = end_time - start_time
+            print(f"---Done in {elapsed_time} seconds---")
             elapsed_time_label = tk.Label(main_frame, text=f"Elapsed Time: {elapsed_time:.2f} seconds")
             elapsed_time_label.pack()
             restart_button = tk.Button(main_frame, text="Next", command=restart_script, width=12 )
@@ -267,6 +277,7 @@ if __name__ == "__main__":
     last_used_directory = load_last_directory()
     main_window = tk.Tk()
     main_frame = tk.Frame(main_window)
+    keyword_var = tk.StringVar()
     main_window.title("BeamNG main.material.json Generator")
     window_width = 320
     window_height = 170
@@ -301,6 +312,8 @@ if __name__ == "__main__":
         open_explorer_button.place_forget()
         output_file_label.place_forget()
         about_button.place_forget()
+        keyword1_radio.place_forget()
+        keyword2_radio.place_forget()
         
         progress_bar.pack()
         result_label.pack()
@@ -310,7 +323,11 @@ if __name__ == "__main__":
         start_time = time.time()
         
         main_window.update()
+        update_keyword()
+        root_directory = root_dir_entry.get()
+        print(f"Keyword: {Keyword}")
         
+        root_folder_names = []
         root_directory = root_dir_entry.get()
         index = root_directory.find(Keyword)
         
@@ -318,12 +335,12 @@ if __name__ == "__main__":
         main_window.update_idletasks()
         
         if index != -1:
-            levels_subpath = root_directory[index:].replace("\\", "/")
-            result_label.config(text=f"{levels_subpath}/{output_file}")
+            subpath = root_directory[index:].replace("\\", "/")
+            result_label.config(text=f"{subpath}/{output_file}")
             update_window_height(None)
             main_window.update()
         else:
-            result_label.config(text=f"'{Keyword}' not found in the root directory")
+            result_label.config(text=f"{Keyword} not found in the root directory")
             restart_button = tk.Button(main_frame, text="Okay", command=restart_script, width=12 )
             restart_button.pack()
             progress_bar.pack_forget()
@@ -435,7 +452,7 @@ if __name__ == "__main__":
                         material_texture_dict[material_name] = matching_texture
                     else:
                         close_matches = get_close_matches(material_name, [os.path.basename(file_path).split('.')[0] for file_path in texture_file_names])
-                        #print(f"  No matching texture found, close matches: {close_matches}")
+                        print(f"  No matching texture found, close matches: {close_matches}")
 
                     if not matching_texture:
                         close_matches = get_close_matches(material_name, [os.path.basename(file_path).split('.')[0] for file_path in texture_file_names])
@@ -443,11 +460,11 @@ if __name__ == "__main__":
                             close_match += 1
                             matching_texture = close_matches[0]
                             material_texture_dict[material_name] = matching_texture
-                            #print(f"  Using closest match: {matching_texture}")
+                            print(f"  Using closest match: {matching_texture}")
                         else:
                             no_match += 1
                             unmatched_materials.append(material_name)  # Add unmatched material to the list
-                            #print(f"  No matching texture found")
+                            print(f"  No matching texture found")
 
                     # Add the processed material name to the set
                     processed_materials.add(material_name)
@@ -486,7 +503,7 @@ if __name__ == "__main__":
 
     main_frame.pack(fill=tk.BOTH, expand=True)
     
-    title_label = tk.Label(main_frame, text="BeamNG main.material.json Generator v1", font=("Helvetica", 10, "bold"))
+    title_label = tk.Label(main_frame, text=f"BeamNG main.material.json Generator v{Version}", font=("Helvetica", 10, "bold"))
     root_dir_label = tk.Label(main_frame, text="Root Directory:")
     root_dir_entry = tk.Entry(main_frame, width=50)
     root_dir_entry.insert(0, last_used_directory)  # Set the initial value to the last used directory
@@ -497,8 +514,15 @@ if __name__ == "__main__":
     open_explorer_button = tk.Button(main_frame, text="Open in Explorer", command=open_in_explorer, width=12)
     output_file_label = tk.Label(main_frame, text="")
     
+    keyword1_radio = tk.Radiobutton(main_frame, text="Levels", variable=keyword_var, value="levels", command=update_keyword)
+    keyword2_radio = tk.Radiobutton(main_frame, text="Vehicles", variable=keyword_var, value="vehicles", command=update_keyword)
+    keyword_var.set("levels")
+    
     about_button = tk.Button(main_frame, text="About", command=open_about_window, width=12)
     about_button.place(x=200, y=102)
+    
+    keyword1_radio.place(x=100,y=130)
+    keyword2_radio.place(x=5,y=130)
     
     output_file_label.place(x=102, y=26)
     title_label.pack(pady=5)
@@ -508,7 +532,7 @@ if __name__ == "__main__":
     clear_button.place(x=200, y=75)
     process_button.place(x=5, y=102)
     open_explorer_button.place(x=102, y=75)    
-    
+
     check_output_file_exists()
     
     root_dir_entry.bind("<KeyRelease>", check_output_file_exists)
