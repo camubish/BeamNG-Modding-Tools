@@ -1,10 +1,10 @@
 # BeamNG-Modding-Tools
         This is a tool that generates main.materials.json files for BeamNG.drive.
         This version;
-            *Only handles level content, files; ".dae" and ".dds". 
+            *Lacks features like; Settings
+            *Handles files; ".dae", ".dds" and ".png". 
             *Sets the "name", "mapTo" and "colorMap" 
-            *Is only useful for batch processing material slots.
-            *Uses gui exclusively          
+            *Is only usefull for batch processing material slots.             
             
         Usage:
         1. Format your texture or material names. They should match or atleast be simular.
@@ -21,12 +21,16 @@
            The script will find any colladas within the root and subfolders
              *Your directory must contain; levels subpath, at least 1 collada and 1 texture for the process to attempt matching.
              
-        3. Enter the root directory.
+        3. Choose you content type to set the keyword using the radio buttons.
+             
+        4. Enter the root directory.
             *Warning, this script will overwrite any existing main.material.json in the directory. Make backups before proceeding. 
             
-        4. Click the "Process" button to generate the JSON file.
+        5. Click the "Process" button to generate the JSON file.
         
-        5. Done. You can now analyse your results. 
+        6. Done. You can now analyse your results. 
            *If any materials are with no matches. A list will be available in a window.  
 
         Author: Camubish
+        
+        '''        
