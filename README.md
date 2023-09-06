@@ -1,10 +1,9 @@
 # BeamNG-Modding-Tools
         This is a tool that generates main.materials.json files for BeamNG.drive.
         This version;
-            *Lacks features like; Settings
             *Only handles level content, files; ".dae" and ".dds". 
             *Sets the "name", "mapTo" and "colorMap" 
-            *Is only usefull for batch processing material slots.
+            *Is only useful for batch processing material slots.
             *Uses gui exclusively          
             
         Usage:
