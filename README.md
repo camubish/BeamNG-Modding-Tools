@@ -32,3 +32,5 @@ Usage:
    - If any materials are without matches, a list will be available in a window.
 
 Author: Camubish
+
+<img width="484" alt="readmepic" src="https://github.com/camubish/BeamNG-Modding-Tools/assets/144230011/ac7a2e52-38db-42c7-a6f2-9b975ee1f600">
