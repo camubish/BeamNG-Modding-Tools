@@ -1,0 +1,62 @@
+import bpy
+import json
+import os
+from mathutils import Matrix, Euler
+
+# Set the output directoy
+output_directory = r'YOUR/DIRECTORY/HERE'
+
+def euler_to_rotation_matrix(euler):
+    return euler.to_matrix().to_3x3()
+
+def export_selected_objects_to_json():
+    selected_objects = bpy.context.selected_objects
+
+    mesh_data_map = {}  # Map mesh data names (characters after last "/") to objects
+
+    # Group selected objects by linked mesh data (characters after last "/")
+    for obj in selected_objects:
+        if obj.type == 'MESH':
+            mesh_data_key = obj.data.name.rsplit('/', 1)[-1]  # Get characters after last "/"
+            if mesh_data_key not in mesh_data_map:
+                mesh_data_map[mesh_data_key] = []
+            mesh_data_map[mesh_data_key].append(obj)
+
+    for mesh_data_name, object_list in mesh_data_map.items():
+        output_data = []
+
+        for obj in object_list:
+            tree_data = {}
+
+            # Extract position
+            tree_data["pos"] = list(obj.location)
+
+            # Calculate the proper rotation matrix for BeamNG.drive from Euler angles
+            rotation_matrix = euler_to_rotation_matrix(obj.rotation_euler)
+            rotation_matrix.transpose()  # Transpose the matrix to match BeamNG.drive format
+
+            # Convert the rotation matrix to a list of elements
+            rotation_values = [elem for row in rotation_matrix for elem in row]
+
+            tree_data["rotationMatrix"] = rotation_values
+
+            # Set scale to 1
+            tree_data["scale"] = 1.0
+
+            # Set type (using characters after last "/")
+            tree_data["type"] = mesh_data_name
+
+            output_data.append(tree_data)
+
+        # Construct the output file path
+        output_file_path = os.path.join(output_directory, f"{mesh_data_name}.forest4.json")
+
+        # Export to JSON file with single-row formatting
+        with open(output_file_path, 'w') as json_file:
+            for item in output_data:
+                json_file.write(json.dumps(item, separators=(',', ':')) + '\n')
+
+        print(f"Exported JSON data for {mesh_data_name} to {output_file_path}")
+
+# Call the export function for selected objects
+export_selected_objects_to_json()
