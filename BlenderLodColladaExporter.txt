@@ -110,17 +110,8 @@ bpy.context.view_layer.active_layer_collection = bpy.context.view_layer.layer_co
 # Set the export path
 export_path = "D:/Blender/Outlands Map Project/LODMODELPROCESSED/" + collection_name + ".dae"
 
-# Get the current rendering engine
-current_engine = bpy.context.scene.render.engine
-
-# Switch to a non-rendering engine to exclude textures
-bpy.context.scene.render.engine = 'BLENDER_WORKBENCH'
-
-# Export the selected objects as Collada (DAE) format
-bpy.ops.export_scene.collada(filepath=export_path, selected=True)
-
-# Restore the original rendering engine
-bpy.context.scene.render.engine = current_engine
+# Configure Collada export settings
+bpy.ops.wm.collada_export(filepath=export_path, selected=True, apply_modifiers=True, include_armatures=False, include_animations=False, triangulate=True)
 
 # Deselect all objects
 bpy.ops.object.select_all(action='DESELECT')
