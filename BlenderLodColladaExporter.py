@@ -8,6 +8,11 @@ def enter_edit_mode(obj):
     bpy.ops.object.mode_set(mode="EDIT")
     bpy.ops.mesh.select_all(action='DESELECT')
 
+def rename_objects_in_collection(collection):
+    for obj in collection.objects:
+        if "." in obj.name:
+            obj.name = obj.name.split(".")[0]
+
 def exit_edit_mode():
     bpy.ops.object.mode_set(mode="OBJECT")
 
@@ -79,7 +84,9 @@ def process_and_export(selected_object):
     colmesh_1.name = "Colmesh-1"
     new_collection.objects.link(colmesh_1)
     colmesh_1.parent = start01
-
+    
+    # Rename objects in the collection by removing characters after "."
+    rename_objects_in_collection(new_collection)
 
     # Switch to Edit Mode
     enter_edit_mode(selected_object)
@@ -114,9 +121,10 @@ def process_and_export(selected_object):
 
     exit_edit_mode()
     
+    
     for obj in new_collection.objects:
         obj.select_set(True)
-
+    
     # Set the collection as the active collection
     bpy.context.view_layer.active_layer_collection = bpy.context.view_layer.layer_collection.children[collection_name]
 
