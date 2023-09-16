@@ -1,4 +1,11 @@
 # BeamNG-Modding-Tools
+managedItemData.json.py: Creates the json file for your forest meshes using specified directories of your .dae's 
+
+BlenderLodColladaExporter.py: Auto exports all in a collection with LOD's. Put this script in blender edit the script to your needs 
+
+BlenderForestDataExporter.py: Creates a json for every object mesh data type. formats their position and rotation. Names them after the mesh name.
+
+Main Material json generator:
 This is a tool that generates main.materials.json files for BeamNG.drive. 
 
 This version:
