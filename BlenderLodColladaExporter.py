@@ -129,7 +129,7 @@ def process_and_export(selected_object):
     bpy.context.view_layer.active_layer_collection = bpy.context.view_layer.layer_collection.children[collection_name]
 
     # Set the export path
-    export_path = "D:/Blender/Outlands Map Project/LODMODELPROCESSED/" + collection_name + ".dae"
+    export_path = "insert/your/directory/here" + collection_name + ".dae"
 
     # Configure Collada export settings
     bpy.ops.wm.collada_export(filepath=export_path, selected=True)
