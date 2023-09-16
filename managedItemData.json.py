@@ -3,8 +3,8 @@ import json
 
 # Specify the directories to search for Collada files
 directories_to_search = [
-    "C:\\Users\\acorn\\AppData\\Local\\BeamNG.drive\\0.29\\mods\\unpacked\\CB_HL2Jalopy\\levels\\ridingshotgun\\art\\shapes\\trees",
-    "C:\\Users\\acorn\\AppData\\Local\\BeamNG.drive\\0.29\\mods\\unpacked\\CB_HL2Jalopy\\levels\\ridingshotgun\\art\\shapes\\rocks",
+    "Your directories here",
+    "Your directories here",
     # Add more directories as needed
 ]
 
@@ -12,7 +12,7 @@ directories_to_search = [
 json_data = {}
 
 # Define the base directory where "levels" starts
-base_directory = "C:\\Users\\acorn\\AppData\\Local\\BeamNG.drive\\0.29\\mods\\unpacked\\CB_HL2Jalopy"
+base_directory = "Your Base directory here"
 
 # Iterate through the specified directories
 for directory in directories_to_search:
