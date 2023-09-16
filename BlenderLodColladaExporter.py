@@ -96,7 +96,7 @@ def process_and_export(selected_object):
         # Deselect all vertices
         bpy.ops.mesh.select_all(action='DESELECT')
         
-        # Get the material index for "rocks_vegetation" material
+        # Replace "rocks_vegetation" with the material of the verticies you want to cull from your Colmesh
         material_index = selected_object.data.materials.find("rocks_vegetation")
 
         # Check if the material index is valid (-1 means the material is not found)
